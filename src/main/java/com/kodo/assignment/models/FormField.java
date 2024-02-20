@@ -18,8 +18,6 @@ public class FormField {
     public FormField convertFormFieldFromEntity(FormFieldEntity formFieldEntity) {
         return FormField.builder()
                 .label(formFieldEntity.getLabel())
-                .type(formFieldEntity.getType())
-                .required(formFieldEntity.isRequired())
                 .configuration(new FieldConfiguration().getFieldConfigurationObject(formFieldEntity.getConfiguration()))
                 .build();
     }

@@ -14,10 +14,8 @@ public class FormFieldEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String label;
-    @Enumerated(EnumType.STRING)
-    private FieldType type;
-    private boolean required;
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "configuration_id")
     private FieldConfigurationEntity configuration;
     @ManyToOne
     @JoinColumn(name = "form_id")
