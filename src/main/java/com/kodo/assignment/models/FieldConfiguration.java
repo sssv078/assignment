@@ -10,6 +10,7 @@ import lombok.*;
 @Data
 @Builder
 public class FieldConfiguration {
+    private Long id;
     private Integer maxSize;
     private Integer minSize;
     private boolean IntegerOnly;
@@ -18,6 +19,7 @@ public class FieldConfiguration {
 
     public FieldConfiguration getFieldConfigurationObject(FieldConfigurationEntity fieldConfigurationEntity) {
         return FieldConfiguration.builder()
+                .id(fieldConfigurationEntity.getId())
                 .maxSize(fieldConfigurationEntity.getMaxSize())
                 .minSize(fieldConfigurationEntity.getMinSize())
                 .IntegerOnly(fieldConfigurationEntity.isIntegerOnly())

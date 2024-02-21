@@ -1,14 +1,19 @@
 package com.kodo.assignment.entity;
 
-import com.kodo.assignment.models.FormField;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Table(name = "form")
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class FormEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

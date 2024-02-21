@@ -3,11 +3,17 @@ package com.kodo.assignment.entity;
 import com.kodo.assignment.models.FieldType;
 import com.kodo.assignment.models.Form;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "field")
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class FormFieldEntity {
 
     @Id

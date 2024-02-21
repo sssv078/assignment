@@ -2,11 +2,17 @@ package com.kodo.assignment.entity;
 
 import com.kodo.assignment.models.FieldType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "field_config")
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class FieldConfigurationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
