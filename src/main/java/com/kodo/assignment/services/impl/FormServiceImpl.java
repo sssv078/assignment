@@ -9,6 +9,7 @@ import com.kodo.assignment.repository.FieldConfigurationRepository;
 import com.kodo.assignment.repository.FormFieldRepository;
 import com.kodo.assignment.repository.FormRepository;
 import com.kodo.assignment.services.FormService;
+import com.kodo.assignment.services.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,9 @@ public class FormServiceImpl implements FormService {
 
     @Autowired
     FieldConfigurationRepository fieldConfigurationRepository;
+
+    @Autowired
+    private ValidationService validationService;
 
     @Override
     public List<Form> getAllForms() {
@@ -81,25 +85,28 @@ public class FormServiceImpl implements FormService {
     @Override
     public boolean submitFormData(Long formId, Form form) {
         //TODO: validate the request
-        form.getFormFields().stream()
-                .forEach(formField -> {
-                    FieldConfiguration fieldConfiguration = formField.getConfiguration();
-                    formFieldRepository.save(FormFieldEntity.builder()
-                                    .label(formField.getLabel())
-                                    .form(FormEntity.builder()
-                                            .title(form.getTitle())
-                                            .submitButtonLabel(form.getSubmitButtonLabel())
-                                            .build())
-                                    .configuration(FieldConfigurationEntity.builder()
-                                            .id(fieldConfiguration.getId())
-                                            .type(fieldConfiguration.getFieldType())
-                                            .maxSize(fieldConfiguration.getMaxSize())
-                                            .minSize(fieldConfiguration.getMinSize())
-                                            .integerOnly(fieldConfiguration.isIntegerOnly())
-                                            .required(fieldConfiguration.isRequired())
-                                            .build())
-                            .build());
-                });
-        return true;
+        if(validationService.validateFormResponse(form)) {
+            form.getFormFields().stream()
+                    .forEach(formField -> {
+                        FieldConfiguration fieldConfiguration = formField.getConfiguration();
+                        formFieldRepository.save(FormFieldEntity.builder()
+                                .label(formField.getLabel())
+                                .form(FormEntity.builder()
+                                        .title(form.getTitle())
+                                        .submitButtonLabel(form.getSubmitButtonLabel())
+                                        .build())
+                                .configuration(FieldConfigurationEntity.builder()
+                                        .id(fieldConfiguration.getId())
+                                        .type(fieldConfiguration.getFieldType())
+                                        .maxSize(fieldConfiguration.getMaxSize())
+                                        .minSize(fieldConfiguration.getMinSize())
+                                        .integerOnly(fieldConfiguration.isIntegerOnly())
+                                        .required(fieldConfiguration.isRequired())
+                                        .build())
+                                .build());
+                    });
+            return true;
+        }
+        return false;
     }
 }
